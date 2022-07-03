@@ -15,10 +15,25 @@
 
 ### ✨ [Demo](https://mdcurrency-api.herokuapp.com/docs)
 
-## Install
+## Run app
 
 ```sh
 run.sh
+#this also runs migrations 
+```
+
+```sh
+python3 -u web.py 
+```
+
+```sh
+uvicorn web:app --host=0.0.0.0 --port=${PORT:-5000} 
+```
+
+## Run migrations
+
+```sh
+python3 -m alembic upgrade head
 ```
 
 ## Run tests
