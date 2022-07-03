@@ -1,3 +1,4 @@
+import os
 import uvicorn
 from fastapi import FastAPI, Request
 from app.controllers.currency import router as currency_router
@@ -28,4 +29,5 @@ async def health_check():
 
 
 if __name__ == "__main__":
-    uvicorn.run(app="web:app", port=4001, reload=True)
+    port = int(os.environ.get("PORT", 4001))
+    uvicorn.run(app="web:app", reload=False, port=port)
