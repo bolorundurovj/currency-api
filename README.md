@@ -1,7 +1,7 @@
 <h1 align="center">Welcome to currency-api 👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1-blue.svg?cacheSeconds=2592000" />
-  <a href="mdcurrency-api.herokuapp.com/docs" target="_blank">
+  <a href="https://mdcurrency-api.herokuapp.com/docs" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
   </a>
   <a href="#" target="_blank">
@@ -11,9 +11,9 @@
 
 > A simple currency converter
 
-### 🏠 [Homepage](mdcurrency-api.herokuapp.com/docs)
+### 🏠 [Homepage](https://mdcurrency-api.herokuapp.com/docs)
 
-### ✨ [Demo](mdcurrency-api.herokuapp.com)
+### ✨ [Demo](https://mdcurrency-api.herokuapp.com/docs)
 
 ## Install
 
