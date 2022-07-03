@@ -1,0 +1,10 @@
+app_env = "$APP_ENV"
+database_url = "sqlite:///currency-api.db"
+hash_algorithm = "HS256"
+jwt_secret = "super_strong_secret"
+log_level = "DEBUG"
+sentry_dsn = "$SENTRY_DSN"
+service_name = "Currency API"
+test_database_url = "sqlite:///test-currency-api.db"
+timezone = "Africa/Lagos"
+token_validity_period = 30
