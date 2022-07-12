@@ -18,8 +18,8 @@
 ## Run app
 
 ```sh
-run.sh
-#this also runs migrations 
+./run.sh
+#This will also run migrations 
 ```
 
 ```sh
