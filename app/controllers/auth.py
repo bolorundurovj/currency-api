@@ -40,4 +40,4 @@ async def create_user_signup(user_data: UserCreate):
             message="The user with this email already exists in the system",
         )
     response = await user_service.create(user=user_data)
-    return success(data=response)
+    return success(code=201, data=response)
