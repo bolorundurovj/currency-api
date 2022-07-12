@@ -25,7 +25,8 @@ async def login(request: UserBase) -> Any:
         data={
             "access_token": await auth.create_access_token(sub=user),
             "token_type": "bearer",
-        }
+        },
+        message="authenticated successfully!"
     )
 
 
@@ -40,4 +41,4 @@ async def create_user_signup(user_data: UserCreate):
             message="The user with this email already exists in the system",
         )
     response = await user_service.create(user=user_data)
-    return success(code=201, data=response)
+    return success(code=201, data=response, message="registered successfully!")
