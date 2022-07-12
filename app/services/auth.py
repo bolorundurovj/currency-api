@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union
 from datetime import datetime, timedelta
 from sqlalchemy.orm.session import Session
 from jose import jwt
@@ -14,14 +14,16 @@ config = Config()
 db = SessionLocal()
 
 
-async def authenticate(email: str, password: str, db: Session = db) -> UserInDBBase:
+async def authenticate(email: str, password: str, db: Session = db) -> Union[UserInDBBase, None]:
     """Authenticates a user
-    :param email: User's email address
-    :param password: User's password
-    :param db: Database session
+
+    Args:
+        email (str): User's email addres
+        password (str):  User's password
+        db (Session, optional): Database session. Defaults to db.
 
     Returns:
-        User: User Object
+        Union[UserInDBBase, None]: User Object
     """
     user = db.query(User).filter(User.email == email).first()
     if not user:
@@ -36,9 +38,10 @@ async def authenticate(email: str, password: str, db: Session = db) -> UserInDBB
 
 
 async def create_access_token(sub: UserInDBBase) -> str:
-
     """Generate JWT
-    :param sub: User Subject
+
+    Args:
+        sub (UserInDBBase): User Subject
 
     Returns:
         str: JWT
@@ -52,15 +55,17 @@ async def create_access_token(sub: UserInDBBase) -> str:
 
 
 async def _create_token(token_type: str, lifetime: timedelta, sub: UserInDBBase) -> str:
-
     """Encode data into JWT
-    :param token_type: Token Type
-    :param lifetime: Expiry Period
-    :param sub: User Subject
+
+    Args:
+        token_type (str): Token Type
+        lifetime (timedelta): Expiry Period
+        sub (UserInDBBase): User Subject
 
     Returns:
         str: JWT
     """
+
     payload = {}
     expire = datetime.utcnow() + lifetime
     payload["type"] = token_type
@@ -74,12 +79,14 @@ PWD_CONTEXT = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 async def verify_password(plain_password: str, hashed_password: str) -> bool:
-
     """Compares plain password to hashed password
-    :param plain_password: Plain password
-    :param hashed_password: Hashed password
+
+    Args:
+        plain_password (str): Plain password
+        hashed_password (str): Hashed password
 
     Returns:
         bool: boolean
     """
+
     return PWD_CONTEXT.verify(plain_password, hashed_password)
