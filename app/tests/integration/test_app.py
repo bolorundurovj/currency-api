@@ -1,10 +1,13 @@
 import os
+import random
+import string
 from fastapi.testclient import TestClient
 from web import app
 
 client = TestClient(app)
 
 
+TEST_MAIL = "{}@gmail.test".format('test'.join((random.choice(string.ascii_lowercase) for x in range(4))))
 TOKEN = None
 
 
@@ -67,7 +70,7 @@ def test_incorrect_login():
 def test_correct_register():
     response = client.post(
         "/auth/signup",
-        json={"email": "test@yahoo.com", "password": "12345"},
+        json={"email": TEST_MAIL, "password": "12345"},
     )
     assert response.status_code == 201
 
@@ -75,7 +78,7 @@ def test_correct_register():
 def test_correct_login():
     response = client.post(
         "/auth/login",
-        json={"email": "test@yahoo.com", "password": "12345"},
+        json={"email": TEST_MAIL, "password": "12345"},
     )
     assert response.status_code == 200
     global TOKEN
@@ -93,6 +96,3 @@ def test_retrieve_currencies_success():
     assert type(response.json().get("data", None)) == list
 
 
-def test_clear_db():
-    os.remove("test-currency-api.db")
-    pass
