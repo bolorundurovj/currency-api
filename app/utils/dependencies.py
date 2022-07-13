@@ -4,7 +4,7 @@ from jose.exceptions import JOSEError
 from fastapi import Depends
 from fastapi.security import HTTPBasicCredentials, HTTPBearer
 from app.utils.configuration import Config
-from app.utils.error_handler import OpsException
+from app.utils.error_handler import AuthException, OpsException
 
 security = HTTPBearer()
 config = Config()
@@ -17,7 +17,7 @@ async def has_access(credentials: HTTPBasicCredentials = Depends(security)):
     token = credentials.credentials
 
     if not token:
-        raise OpsException(code=401, message="No authorization token provided")
+        raise AuthException(code=401, message="No authorization token provided")
 
     try:
         payload = jwt.decode(
@@ -33,9 +33,9 @@ async def has_access(credentials: HTTPBasicCredentials = Depends(security)):
         )
         return payload
     except ExpiredSignatureError:
-        raise OpsException(code=401, message="Authorization token expired")
+        raise AuthException(code=401, message="Authorization token expired")
     except JOSEError as e:
         logger.exception(e.args, exc_info=e)
-        raise OpsException(code=401, message=str(e))
+        raise AuthException(code=401, message=str(e))
     except Exception:
-        raise OpsException(code=401, message="Unable to parse authentication token")
+        raise AuthException(code=401, message="Unable to parse authorization token")
