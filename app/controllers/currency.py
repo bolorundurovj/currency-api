@@ -16,7 +16,7 @@ router = APIRouter(prefix="/currencies", tags=["Currencies"], dependencies=PROTE
 log = Logger()
 
 
-@router.get("/", response_model=BaseResponse[List[Currency]])
+@router.get("/", response_model=BaseResponse[List[Currency]], response_description="Returns a list of supported currencies")
 async def retrieve_currencies():
     try:
         currencies = await currency.get_supported_currencies()
@@ -29,7 +29,7 @@ async def retrieve_currencies():
         raise
 
 
-@router.post("/convert", response_model=BaseResponse[ConvertedCurrency])
+@router.post("/convert", response_model=BaseResponse[ConvertedCurrency], response_description="Converts from one currency to another")
 async def convert_currency(request: ConvertCurrency):
     try:
         conversion_rate = await currency.get_currency_rate(

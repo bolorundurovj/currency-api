@@ -17,6 +17,8 @@ router = APIRouter(prefix="/auth", tags=["Auth"])
 
 @router.post("/login", response_model=BaseResponse[UserAuth])
 async def login(request: UserBase) -> Any:
+    if not is_valid_email(request.email):
+        raise OpsException(code=400, message="email is not properly formatted!")
     user = await auth.authenticate(email=request.email, password=request.password)
     if not user:
         raise OpsException(code=400, message="Incorrect username or password")
@@ -25,19 +27,20 @@ async def login(request: UserBase) -> Any:
         data={
             "access_token": await auth.create_access_token(sub=user),
             "token_type": "bearer",
-        }
+        },
+        message="authenticated successfully!"
     )
 
 
 @router.post("/signup", response_model=BaseResponse[UserInDBBase], status_code=201)
 async def create_user_signup(user_data: UserCreate):
     if not is_valid_email(user_data.email):
-        raise OpsException(code=400, message="Email is not valid")
+        raise OpsException(code=400, message="email is not properly formatted!")
     user = await user_service.get_by_email(email=user_data.email)
     if user:
         raise OpsException(
             code=400,
-            message="The user with this email already exists in the system",
+            message="email already exists!",
         )
     response = await user_service.create(user=user_data)
-    return success(data=response)
+    return success(code=201, data=response, message="registered successfully!")

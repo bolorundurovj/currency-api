@@ -1,3 +1,4 @@
+from functools import lru_cache
 from typing import List
 import httpx
 from app.models.pydantic.currency import Currency, CurrencyRate
@@ -11,6 +12,7 @@ client = httpx.AsyncClient()
 log = Logger()
 
 
+@lru_cache()
 async def get_supported_currencies() -> List[Currency]:
     """Retrieves and maps supported currencies from external api
 
