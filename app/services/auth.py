@@ -28,7 +28,7 @@ async def authenticate(email: str, password: str, db: Session = db) -> Union[Use
     user = db.query(User).filter(User.email == email).first()
     if not user:
         return None
-    if not verify_password(password, user.password):
+    if not await verify_password(password, user.password):
         return None
     return {
         "id": user.id,
