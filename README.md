@@ -37,6 +37,7 @@ python3 -m alembic upgrade head
 ```
 
 ## Run tests
+No special setup is needed here, as long as the variables ins your `config.toml` are set all should be good :).
 
 ```sh
 python3 -m pytest
