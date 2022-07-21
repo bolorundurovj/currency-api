@@ -3,31 +3,6 @@ import logging
 
 
 class SimpleLogFormatter(logging.Formatter):
-    def_keys = [
-        "name",
-        "msg",
-        "args",
-        "levelname",
-        "levelno",
-        "pathname",
-        "filename",
-        "module",
-        "exc_info",
-        "exc_text",
-        "stack_info",
-        "lineno",
-        "funcName",
-        "created",
-        "msecs",
-        "relativeCreated",
-        "thread",
-        "correlation_id" "threadName",
-        "processName",
-        "process",
-        "message",
-        "extra_data",
-    ]
-
     def __init__(self, fmt=None, datefmt=None, style="%", validate=True):
         super().__init__(fmt, datefmt, style, validate)
 
